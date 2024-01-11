@@ -30,6 +30,7 @@ import Header from "./header";
 import customTheme from "../utils/theme";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -37,7 +38,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
-
+  const { push } = useRouter();
   return (
     <ChakraProvider theme={customTheme}>
       <Flex
@@ -84,7 +85,6 @@ const SignUp = () => {
                 axios
                   .post("http://localhost:5000/auth/register", registerUser)
                   .then((res) => {
-                    console.log(res.data);
                     if (res.data.success) {
                       toast({
                         title: "Success",
@@ -94,7 +94,7 @@ const SignUp = () => {
                         isClosable: true,
                         position: "top-right",
                       });
-                      window.location.href = "/signin";
+                      push("/signin");
                     } else {
                       toast({
                         title: "Warning",

@@ -20,20 +20,27 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
-import { ChakraProvider, theme } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 
+import { useRouter } from "next/navigation";
 import { Logo } from "./Logo";
 import { OAuthButtonGroup } from "./OAuthButtonGroup";
 import Header from "./header";
 import customTheme from "../utils/theme";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { jwtDecode } from "jwt-decode";
 
 import axios from "axios";
+import { useAppContext } from "@/context/authContext";
 
 const Login = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const toast = useToast();
+  const { push } = useRouter();
+  const { setUser } = useAppContext();
 
   return (
     <ChakraProvider theme={customTheme}>
@@ -80,11 +87,25 @@ const Login = () => {
                   email,
                   password,
                 };
-                // axios
-                //   .post("http://localhost:5000/auth/login", loginUser)
-                //   .then((res) => {
-                //     console.log(res.data);
-                //   });
+                axios
+                  .post("http://localhost:5000/auth/login", loginUser)
+                  .then((res) => {
+                    if (res.data.success) {
+                      const user = jwtDecode(res.data.token);
+                      setUser(user);
+                      localStorage.setItem("user", JSON.stringify(user));
+                      push("/home");
+                    } else {
+                      toast({
+                        title: "Warning",
+                        description: res.data.msg,
+                        status: "warning",
+                        duration: 5000,
+                        isClosable: true,
+                        position: "top-right",
+                      });
+                    }
+                  });
               }}
             >
               <Stack spacing="6">
