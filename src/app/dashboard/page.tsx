@@ -83,6 +83,21 @@ export default function Home() {
                       <Td>
                         <Checkbox
                           isChecked={user.admin == "0" ? false : true}
+                          onChange={(e) => {
+                            axios.put(
+                              "http://localhost:5000/auth/update_admin",
+                              {
+                                admin: user.admin == "0" ? 1 : 0,
+                                id: user.id,
+                              }
+                            );
+                            axios
+                              .get("http://localhost:5000/auth")
+                              .then((res) => {
+                                const users = [...res.data.users];
+                                setUsers(users);
+                              });
+                          }}
                         />
                       </Td>
                       <Td>{moment().format("YYYY-MM-DD", user.created_at)}</Td>
