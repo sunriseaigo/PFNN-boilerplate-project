@@ -156,7 +156,7 @@ const Header = () => {
                               setIsAuth(false);
                               localStorage.removeItem("user");
                               setUser({});
-                              push("/landing");
+                              push("/");
                             }}
                           >
                             Sign out

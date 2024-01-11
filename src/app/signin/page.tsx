@@ -28,7 +28,7 @@ import { Logo } from "./Logo";
 import { OAuthButtonGroup } from "./OAuthButtonGroup";
 import Header from "./header";
 import customTheme from "../utils/theme";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import axios from "axios";
@@ -40,11 +40,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const toast = useToast();
   const { push } = useRouter();
-  const { isAuth, setUser, setIsAuth } = useAppContext();
+  const { isAuth, setUser, setIsAuth, setIsAdmin } = useAppContext();
 
   useEffect(() => {
     if (isAuth) {
-      push("/home");
+      push("/dashboard");
     }
   }, []);
 
@@ -100,8 +100,9 @@ const Login = () => {
                       const user = jwtDecode(res.data.token);
                       setUser(user);
                       setIsAuth(true);
+                      setIsAdmin(user.admin ? true : false);
                       localStorage.setItem("user", JSON.stringify(user));
-                      push("/home");
+                      push("/dashboard");
                     } else {
                       toast({
                         title: "Warning",

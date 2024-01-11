@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-
 import {
   Box,
   Flex,
@@ -20,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import Logo from "./logo";
 import { useAppContext } from "@/context/authContext";
+import { useRouter } from "next/navigation";
 
 const MenuItem = ({
   children,
@@ -68,9 +67,9 @@ const MenuIcon = () => (
 const Header = () => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
-  const { user, setIsAuth, setUser } = useAppContext();
-
   const { push } = useRouter();
+  const { user, setIsAuth, setUser, isAuth } = useAppContext();
+
   return (
     <Flex
       as="nav"
@@ -101,75 +100,79 @@ const Header = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem to="/landing">Landing</MenuItem>
+          {isAuth && <MenuItem to="/dashboard">Dashboard</MenuItem>}
           <MenuItem to="/home">Home</MenuItem>
-          <MenuItem to="/experience">Experience </MenuItem>
           <MenuItem to="/portfolio">Portfolio</MenuItem>
           <MenuItem to="/faetures">Features </MenuItem>
           <MenuItem to="/pricing">Pricing </MenuItem>
         </Flex>
       </Box>
-      <Box>
-        <Flex alignItems={"center"}>
-          <Stack direction={"row"} spacing={7}>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}
-              >
-                <Avatar
-                  size={"sm"}
-                  src={"https://avatars.githubusercontent.com/u/61585443?v=4"}
+      {isAuth ? (
+        <Box>
+          <Flex alignItems={"center"}>
+            <Stack direction={"row"} spacing={7}>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}
                 >
-                  <AvatarBadge
-                    className="blink"
-                    boxSize="1.15em"
-                    bg="green.400"
-                  />
-                </Avatar>
-              </MenuButton>
-              <MenuList alignItems={"center"}>
-                <br />
-                <Center>
                   <Avatar
-                    size={"2xl"}
+                    size={"sm"}
                     src={"https://avatars.githubusercontent.com/u/61585443?v=4"}
-                  />
-                </Center>
-                <br />
-                <Center>
-                  <Box>
-                    <Text fontWeight="bold">
-                      {user && user.name}
-                      <br />
-                      <Badge ml="1" colorScheme="green">
-                        ACTIVE - Freelancer
-                      </Badge>
-                    </Text>
-                    <Text fontSize="sm">Software Developer</Text>
-                    <Button
-                      width={"100%"}
-                      colorScheme="red"
-                      onClick={() => {
-                        setIsAuth(false);
-                        localStorage.removeItem("user");
-                        setUser({});
-                        push("/landing");
-                      }}
-                    >
-                      Sign out
-                    </Button>
-                  </Box>
-                </Center>
-                <br />
-              </MenuList>
-            </Menu>
-          </Stack>
-        </Flex>
-      </Box>
+                  >
+                    <AvatarBadge
+                      className="blink"
+                      boxSize="1.15em"
+                      bg="green.400"
+                    />
+                  </Avatar>
+                </MenuButton>
+                <MenuList alignItems={"center"}>
+                  <br />
+                  <Center>
+                    <Avatar
+                      size={"2xl"}
+                      src={
+                        "https://avatars.githubusercontent.com/u/61585443?v=4"
+                      }
+                    />
+                  </Center>
+                  <br />
+                  <Center>
+                    <Box>
+                      <Text fontWeight="bold">
+                        {user.name}
+                        <br />
+                        <Badge ml="1" colorScheme="green">
+                          ACTIVE - Freelancer
+                        </Badge>
+                      </Text>
+                      <Text fontSize="sm">Software Developer</Text>
+                      <Button
+                        width={"100%"}
+                        colorScheme="red"
+                        onClick={() => {
+                          localStorage.removeItem("user");
+                          setUser({});
+
+                          setIsAuth(false);
+                          push("/");
+                        }}
+                      >
+                        Sign out
+                      </Button>
+                    </Box>
+                  </Center>
+                  <br />
+                </MenuList>
+              </Menu>
+            </Stack>
+          </Flex>
+        </Box>
+      ) : null}
     </Flex>
   );
 };
