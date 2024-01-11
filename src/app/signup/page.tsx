@@ -50,7 +50,7 @@ const SignUp = () => {
                 Sign up your account
               </Heading>
               <Text color="fg.muted">
-                Do not have an account? <Link href="/signup">Sign In</Link>
+                Do not have an account? <Link href="/signin">Sign In</Link>
               </Text>
             </Stack>
           </Stack>

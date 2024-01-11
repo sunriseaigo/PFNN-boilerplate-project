@@ -43,7 +43,9 @@ const Login = () => {
       >
         <Stack spacing="8">
           <Stack spacing="6">
-            <Logo />
+            <Link href="/landing">
+              <Logo />
+            </Link>
             <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
               <Heading size={{ base: "xs", md: "sm" }}>
                 Log in to your account
