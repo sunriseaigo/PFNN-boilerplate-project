@@ -35,7 +35,7 @@ import axios from "axios";
 import { useAppContext } from "@/context/authContext";
 
 const Login = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();

@@ -1,19 +1,39 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { createContext, useContext, useState, useEffect } from "react";
 
-const AuthContext = createContext({});
+interface AuthContextProps {
+  user: string;
+  setUser: (_: string) => void;
+  isAdmin: boolean;
+  setIsAdmin: (_: boolean) => void;
+  isAuth: boolean;
+  setIsAuth: (_: boolean) => void;
+}
 
-export function AppWrapper({ children }: { children: React.ReactNode }) {
-  const [currentUser, setCurrentUser] = useState("");
-  const [admin, setAdmin] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { push } = useRouter();
+const defaultValue: AuthContextProps = {
+  user: "",
+  setUser: (_: string) => {},
+  isAdmin: false,
+  setIsAdmin: (_: boolean) => {},
+  isAuth: false,
+  setIsAuth: (_: boolean) => {},
+};
+
+const AuthContext = createContext<AuthContextProps>(defaultValue);
+
+interface IAppWrapperProps {
+  children: React.ReactNode;
+}
+
+export function AppWrapper({ children }: IAppWrapperProps) {
+  const [currentUser, setCurrentUser] = useState<string>("");
+  const [admin, setAdmin] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    setCurrentUser(JSON.parse(user));
+    const user: string | null = localStorage.getItem("user");
+    setCurrentUser(user && JSON.parse(user));
     if (user) {
       setIsAuthenticated(true);
       const admin = JSON.parse(user).admin;
@@ -21,7 +41,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  let sharedState = {
+  const sharedState = {
     user: currentUser,
     setUser: setCurrentUser,
     isAdmin: admin,
@@ -29,8 +49,6 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     isAuth: isAuthenticated,
     setIsAuth: setIsAuthenticated,
   };
-
-  // console.log(isAuthenticated, currentUser);
 
   return (
     <AuthContext.Provider value={sharedState}>{children}</AuthContext.Provider>

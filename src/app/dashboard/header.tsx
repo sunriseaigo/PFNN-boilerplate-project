@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -46,7 +46,8 @@ const MenuIcon = () => (
 const Header = () => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
-  const { user, setIsAuth, setUser } = useAppContext();
+  const context = useAppContext();
+  const { user, setIsAuth, setUser } = context;
 
   const { push } = useRouter();
   return (
