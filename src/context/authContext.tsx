@@ -7,7 +7,7 @@ const AuthContext = createContext({});
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [admin, setAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { push } = useRouter();
 
@@ -16,14 +16,16 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     setCurrentUser(JSON.parse(user));
     if (user) {
       setIsAuthenticated(true);
+      const admin = JSON.parse(user).admin;
+      setAdmin(admin == "0" ? false : true);
     }
   }, []);
 
   let sharedState = {
     user: currentUser,
     setUser: setCurrentUser,
-    isAdmin: isAdmin,
-    setIsAdmin: setIsAdmin,
+    isAdmin: admin,
+    setIsAdmin: setAdmin,
     isAuth: isAuthenticated,
     setIsAuth: setIsAuthenticated,
   };

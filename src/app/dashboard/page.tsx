@@ -22,10 +22,11 @@ import { useAppContext } from "@/context/authContext";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-// import moment from ''
+import moment from "moment";
 
 export default function Home() {
   const { user, isAuth, isAdmin } = useAppContext();
+
   const [users, setUsers] = useState([]);
   const { push } = useRouter();
   const toast = useToast();
@@ -47,7 +48,6 @@ export default function Home() {
       setUsers(res.data.users);
     });
   }, []);
-  console.log(users);
 
   return (
     <ChakraProvider theme={customTheme}>
@@ -58,44 +58,50 @@ export default function Home() {
         m="0 auto"
       >
         <Header />
-        <Flex justifyContent="flex-end" maxW={{ xl: "1000px" }} m="0 auto">
-          <TableContainer maxWidth="100%">
-            <Table variant="striped" colorScheme="teal">
-              <TableCaption>Imperial to metric conversion factors</TableCaption>
-              <Thead>
-                <Tr>
-                  <Th>No</Th>
-                  <Th>Name</Th>
-                  <Th>Email</Th>
-                  <Th>Admin</Th>
-                  <Th>Create at</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {users.map((user, index) => (
-                  <Tr key={user.id}>
-                    <Td>{index + 1}</Td>
-                    <Td>{user.name}</Td>
-                    <Td>{user.email}</Td>
-                    <Td>
-                      <Checkbox isChecked={user.admin ? true : false} />
-                    </Td>
-                    <Td>{user.created_at}</Td>
+        {isAdmin && (
+          <Flex justifyContent="flex-end" maxW={{ xl: "1000px" }} m="0 auto">
+            <TableContainer maxWidth="100%">
+              <Table variant="striped" colorScheme="teal">
+                <TableCaption>
+                  Imperial to metric conversion factors
+                </TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th>No</Th>
+                    <Th>Name</Th>
+                    <Th>Email</Th>
+                    <Th>Admin</Th>
+                    <Th>Create at</Th>
                   </Tr>
-                ))}
-              </Tbody>
-              <Tfoot>
-                <Tr>
-                  <Th>No</Th>
-                  <Th>Name</Th>
-                  <Th>Email</Th>
-                  <Th>Admin</Th>
-                  <Th>Create at</Th>
-                </Tr>
-              </Tfoot>
-            </Table>
-          </TableContainer>
-        </Flex>
+                </Thead>
+                <Tbody>
+                  {users.map((user, index) => (
+                    <Tr key={user.id}>
+                      <Td>{index + 1}</Td>
+                      <Td>{user.name}</Td>
+                      <Td>{user.email}</Td>
+                      <Td>
+                        <Checkbox
+                          isChecked={user.admin == "0" ? false : true}
+                        />
+                      </Td>
+                      <Td>{moment().format("YYYY-MM-DD", user.created_at)}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+                <Tfoot>
+                  <Tr>
+                    <Th>No</Th>
+                    <Th>Name</Th>
+                    <Th>Email</Th>
+                    <Th>Admin</Th>
+                    <Th>Create at</Th>
+                  </Tr>
+                </Tfoot>
+              </Table>
+            </TableContainer>
+          </Flex>
+        )}
       </Flex>
     </ChakraProvider>
   );
