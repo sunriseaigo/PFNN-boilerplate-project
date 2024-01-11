@@ -80,11 +80,11 @@ const SignUp = () => {
                   email,
                   password,
                 };
-                // axios
-                //   .post("http://localhost:5000/auth/login", loginUser)
-                //   .then((res) => {
-                //     console.log(res.data);
-                //   });
+                axios
+                  .post("http://localhost:5000/auth/register", registgerUser)
+                  .then((res) => {
+                    window.location.href = "/signin";
+                  });
               }}
             >
               <Stack spacing="6">
