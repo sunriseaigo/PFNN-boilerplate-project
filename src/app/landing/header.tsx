@@ -1,8 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { Box, Flex, Text, Button, Link } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Button,
+  Link,
+  Stack,
+  Menu,
+  MenuButton,
+  AvatarBadge,
+  Avatar,
+  MenuList,
+  Center,
+  Badge,
+} from "@chakra-ui/react";
 import Logo from "./logo";
+import { useAppContext } from "@/context/authContext";
+import { useRouter } from "next/navigation";
 
 const MenuItem = ({
   children,
@@ -51,7 +67,8 @@ const MenuIcon = () => (
 const Header = () => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
-
+  const { push } = useRouter();
+  const { user, setUser, setIsAuth } = useAppContext();
   return (
     <Flex
       as="nav"
@@ -86,42 +103,92 @@ const Header = () => {
           <MenuItem to="/how">How It works </MenuItem>
           <MenuItem to="/faetures">Features </MenuItem>
           <MenuItem to="/pricing">Pricing </MenuItem>
-          <MenuItem to="/signin">
-            <Button
-              size="sm"
-              rounded="md"
-              color={["primary.500", "primary.500", "white", "white"]}
-              bg={["white", "white", "primary.500", "primary.500"]}
-              _hover={{
-                bg: [
-                  "primary.100",
-                  "primary.100",
-                  "primary.600",
-                  "primary.600",
-                ],
-              }}
-            >
-              Sign In
-            </Button>
-          </MenuItem>
-          <MenuItem to="/signup" isLast>
-            <Button
-              size="sm"
-              rounded="md"
-              color={["primary.500", "primary.500", "white", "white"]}
-              bg={["white", "white", "primary.500", "primary.500"]}
-              _hover={{
-                bg: [
-                  "primary.100",
-                  "primary.100",
-                  "primary.600",
-                  "primary.600",
-                ],
-              }}
-            >
-              Sign Up
-            </Button>
-          </MenuItem>
+          {user ? (
+            <Box>
+              <Flex alignItems={"center"}>
+                <Stack direction={"row"} spacing={7}>
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      rounded={"full"}
+                      variant={"link"}
+                      cursor={"pointer"}
+                      minW={0}
+                    >
+                      <Avatar
+                        size={"sm"}
+                        src={
+                          "https://avatars.githubusercontent.com/u/61585443?v=4"
+                        }
+                      >
+                        <AvatarBadge
+                          className="blink"
+                          boxSize="1.15em"
+                          bg="green.400"
+                        />
+                      </Avatar>
+                    </MenuButton>
+                    <MenuList alignItems={"center"}>
+                      <br />
+                      <Center>
+                        <Avatar
+                          size={"2xl"}
+                          src={
+                            "https://avatars.githubusercontent.com/u/61585443?v=4"
+                          }
+                        />
+                      </Center>
+                      <br />
+                      <Center>
+                        <Box>
+                          <Text fontWeight="bold">
+                            {user && user.name}
+                            <br />
+                            <Badge ml="1" colorScheme="green">
+                              ACTIVE - Freelancer
+                            </Badge>
+                          </Text>
+                          <Text fontSize="sm">Software Developer</Text>
+                          <Button
+                            width={"100%"}
+                            colorScheme="red"
+                            onClick={() => {
+                              setIsAuth(false);
+                              localStorage.removeItem("user");
+                              setUser({});
+                              push("/landing");
+                            }}
+                          >
+                            Sign out
+                          </Button>
+                        </Box>
+                      </Center>
+                      <br />
+                    </MenuList>
+                  </Menu>
+                </Stack>
+              </Flex>
+            </Box>
+          ) : (
+            <MenuItem to="/signin" isLast>
+              <Button
+                size="sm"
+                rounded="md"
+                color={["primary.500", "primary.500", "white", "white"]}
+                bg={["white", "white", "primary.500", "primary.500"]}
+                _hover={{
+                  bg: [
+                    "primary.100",
+                    "primary.100",
+                    "primary.600",
+                    "primary.600",
+                  ],
+                }}
+              >
+                Sign In
+              </Button>
+            </MenuItem>
+          )}
         </Flex>
       </Box>
     </Flex>

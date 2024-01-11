@@ -8,21 +8,28 @@ import { useToast } from "@chakra-ui/react";
 import customTheme from "../utils/theme";
 import Header from "./header";
 import { useAppContext } from "@/context/authContext";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const { user } = useAppContext();
-
+  const { user, isAuth } = useAppContext();
+  const { push } = useRouter();
   const toast = useToast();
+
   useEffect(() => {
-    toast({
-      title: `${user.name}`,
-      description: "welcome to our dashboard.",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-      position: "top-right",
-    });
+    if (isAuth) {
+      toast({
+        title: `${user.name}`,
+        description: "welcome to our dashboard.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    } else {
+      push("signin");
+    }
   }, []);
+
   return (
     <ChakraProvider theme={customTheme}>
       <Flex

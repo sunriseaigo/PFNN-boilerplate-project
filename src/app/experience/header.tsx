@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-
 import {
   Box,
   Flex,
@@ -20,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import Logo from "./logo";
 import { useAppContext } from "@/context/authContext";
+import { useRouter } from "next/navigation";
 
 const MenuItem = ({
   children,
@@ -68,9 +67,8 @@ const MenuIcon = () => (
 const Header = () => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
-  const { user, setIsAuth, setUser } = useAppContext();
-
   const { push } = useRouter();
+  const { user, setIsAuth } = useAppContext();
   return (
     <Flex
       as="nav"
@@ -101,7 +99,6 @@ const Header = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem to="/landing">Landing</MenuItem>
           <MenuItem to="/home">Home</MenuItem>
           <MenuItem to="/experience">Experience </MenuItem>
           <MenuItem to="/portfolio">Portfolio</MenuItem>
@@ -143,7 +140,7 @@ const Header = () => {
                 <Center>
                   <Box>
                     <Text fontWeight="bold">
-                      {user && user.name}
+                      {user.name}
                       <br />
                       <Badge ml="1" colorScheme="green">
                         ACTIVE - Freelancer
@@ -155,8 +152,6 @@ const Header = () => {
                       colorScheme="red"
                       onClick={() => {
                         setIsAuth(false);
-                        localStorage.removeItem("user");
-                        setUser({});
                         push("/landing");
                       }}
                     >

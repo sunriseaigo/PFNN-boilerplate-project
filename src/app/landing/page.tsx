@@ -6,7 +6,6 @@ import { Flex } from "@chakra-ui/react";
 import Hero from "./Hero";
 import customTheme from "../utils/theme";
 import Header from "./header";
-
 export default function Landing() {
   return (
     <ChakraProvider theme={customTheme}>

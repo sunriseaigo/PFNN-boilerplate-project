@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Step,
@@ -13,7 +15,14 @@ import {
   useColorModeValue,
   useSteps,
   Progress,
+  Flex,
 } from "@chakra-ui/react";
+import "./index.css";
+
+import { ChakraProvider } from "@chakra-ui/react";
+import customTheme from "../utils/theme";
+import Header from "./header";
+
 const steps = [
   {
     title: "Front End Developer Intern (Remote) - Next.js",
@@ -62,77 +71,78 @@ const Experience = () => {
   const progressPercent = (activeStep / max) * 100;
 
   return (
-    <Box
-      p={4}
-      id="experience"
-      textAlign="center"
-      style={{ overflow: "hidden" }}
-    >
-      <Center py={4}>
-        <Text
-          textTransform="uppercase"
-          color="blue.400"
-          fontWeight={600}
-          fontSize="sm"
-          bg={useColorModeValue("blue.50", "blue.900")}
+    <ChakraProvider theme={customTheme}>
+      <Flex
+        direction="column"
+        align="center"
+        maxW={{ xl: "1400px" }}
+        m="0 auto"
+      >
+        <Header />
+        <Box
           p={2}
-          alignSelf="flex-start"
-          rounded="md"
+          id="experience"
+          textAlign="center"
+          style={{ overflow: "hidden" }}
         >
-          My Experience
-        </Text>
-      </Center>
+          <Center py={4}>
+            <Text
+              textTransform="uppercase"
+              color="blue.400"
+              fontWeight={600}
+              fontSize="sm"
+              bg={useColorModeValue("blue.50", "blue.900")}
+              p={2}
+              alignSelf="flex-start"
+              rounded="md"
+            >
+              My Experience
+            </Text>
+          </Center>
 
-      <Center>
-        <Box width={{ base: "100%", md: "80%", lg: "50%" }}>
-          <Stepper
-            activeStep={0}
-            lineWidth={3}
-            steps={steps.length}
-            orientation="vertical"
-            index={activeStep}
-          >
-            {steps.map((step, index) => (
-              <Step mt={2} m={15} key={index}>
-                <StepIndicator>
-                  <StepStatus complete={<StepIcon />} />
-                </StepIndicator>
+          <Center>
+            <Box width={{ base: "100%", md: "80%", lg: "50%" }}>
+              <Stepper
+                activeStep={0}
+                lineWidth={3}
+                steps={steps.length}
+                orientation="vertical"
+                index={activeStep}
+              >
+                {steps.map((step, index) => (
+                  <Step mt={2} m={15} key={index}>
+                    <StepIndicator>
+                      <StepStatus complete={<StepIcon />} />
+                    </StepIndicator>
 
-                <Box
-                  p={4}
-                  boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                  borderRadius="10px"
-                  overflow="hidden"
-                  scrollMarginY={10}
-                >
-                  <StepTitle fontSize="18px" fontWeight="bold">
-                    {step.title}
-                  </StepTitle>
-                  <StepDescription fontWeight="bold" fontSize="0.8em">
-                    {step.duration}
-                  </StepDescription>
-                  <StepDescription fontWeight="bold">
-                    {step.companyName}
-                  </StepDescription>
-                  <StepDescription>{step.description}</StepDescription>
-                </Box>
+                    <Box
+                      p={4}
+                      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                      borderRadius="10px"
+                      overflow="hidden"
+                      scrollMarginY={10}
+                    >
+                      <StepTitle fontSize="18px" fontWeight="bold">
+                        {step.title}
+                      </StepTitle>
+                      <StepDescription fontWeight="bold" fontSize="0.8em">
+                        {step.duration}
+                      </StepDescription>
+                      <StepDescription fontWeight="bold">
+                        {step.companyName}
+                      </StepDescription>
+                      <StepDescription>{step.description}</StepDescription>
+                    </Box>
 
-                <StepSeparator />
-              </Step>
-            ))}
-          </Stepper>
+                    <StepSeparator />
+                  </Step>
+                ))}
+              </Stepper>
+            </Box>
+          </Center>
         </Box>
-      </Center>
-
-      <Progress
-        value={progressPercent}
-        position="absolute"
-        height="3px"
-        width="full"
-        top="10px"
-        zIndex={-1}
-      />
-    </Box>
+      </Flex>
+    </ChakraProvider>
   );
 };
 export default Experience;

@@ -28,7 +28,7 @@ import { Logo } from "./Logo";
 import { OAuthButtonGroup } from "./OAuthButtonGroup";
 import Header from "./header";
 import customTheme from "../utils/theme";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import axios from "axios";
@@ -40,7 +40,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const toast = useToast();
   const { push } = useRouter();
-  const { setUser } = useAppContext();
+  const { isAuth, setUser, setIsAuth } = useAppContext();
+
+  useEffect(() => {
+    if (isAuth) {
+      push("/home");
+    }
+  }, []);
 
   return (
     <ChakraProvider theme={customTheme}>
@@ -93,6 +99,7 @@ const Login = () => {
                     if (res.data.success) {
                       const user = jwtDecode(res.data.token);
                       setUser(user);
+                      setIsAuth(true);
                       localStorage.setItem("user", JSON.stringify(user));
                       push("/home");
                     } else {
