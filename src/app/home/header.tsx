@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import {
   Box,
   Flex,
@@ -66,7 +68,8 @@ const MenuIcon = () => (
 const Header = () => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
-  const { user } = useAppContext();
+  const { user, setIsAuth } = useAppContext();
+  const { push } = useRouter();
 
   return (
     <Flex
@@ -144,7 +147,14 @@ const Header = () => {
                     </Badge>
                   </Text>
                   <Text fontSize="sm">Software Developer</Text>
-                  <Button width={"100%"} colorScheme="red">
+                  <Button
+                    width={"100%"}
+                    colorScheme="red"
+                    onClick={() => {
+                      setIsAuth(false);
+                      push("/landing");
+                    }}
+                  >
                     Sign out
                   </Button>
                 </Box>
