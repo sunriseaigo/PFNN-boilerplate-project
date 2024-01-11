@@ -21,28 +21,6 @@ import {
 import Logo from "./logo";
 import { useAppContext } from "@/context/authContext";
 
-const MenuItem = ({
-  children,
-  isLast,
-  to = "/",
-  ...rest
-}: {
-  children: React.ReactNode;
-  isLast: boolean;
-  to: String;
-}) => {
-  return (
-    <Text
-      mb={{ base: isLast ? 0 : 8, sm: 0 }}
-      mr={{ base: 0, sm: isLast ? 0 : 8 }}
-      display="block"
-      {...rest}
-    >
-      <Link href={to}>{children}</Link>
-    </Text>
-  );
-};
-
 const CloseIcon = () => (
   <svg width="24" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
     <title>Close</title>
@@ -101,11 +79,25 @@ const Header = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem to="/landing">Landing</MenuItem>
-          <MenuItem to="/home">Home</MenuItem>
-          <MenuItem to="/dashboard">Dashboard </MenuItem>
-          <MenuItem to="/faetures">Features </MenuItem>
-          <MenuItem to="/pricing">Pricing </MenuItem>
+          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
+            <Link href="/landing">Landing</Link>
+          </Text>
+          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
+            <Link href="/home">Home</Link>
+          </Text>
+          <Text
+            mb={{ dashboard: 8, sm: 0 }}
+            mr={{ base: 0, sm: 8 }}
+            display="block"
+          >
+            <Link href="/landing">Dashboard</Link>
+          </Text>
+          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
+            <Link href="/faetures">Features</Link>
+          </Text>
+          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
+            <Link href="/pricing">Pricing</Link>
+          </Text>
         </Flex>
       </Box>
       <Box>
