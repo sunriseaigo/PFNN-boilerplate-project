@@ -100,11 +100,21 @@ const Header = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          {isAuth && <MenuItem to="/dashboard">Dashboard</MenuItem>}
-          <MenuItem to="/home">Home</MenuItem>
-          <MenuItem to="/portfolio">Portfolio</MenuItem>
-          <MenuItem to="/faetures">Features </MenuItem>
-          <MenuItem to="/pricing">Pricing </MenuItem>
+          {isAuth && (
+            <Text
+              mb={{ dashboard: 8, sm: 0 }}
+              mr={{ base: 0, sm: 8 }}
+              display="block"
+            >
+              <Link href="/landing">Dashboard</Link>
+            </Text>
+          )}
+          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
+            <Link href="/landing">Landing</Link>
+          </Text>
+          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
+            <Link href="/home">Home</Link>
+          </Text>
         </Flex>
       </Box>
       {isAuth ? (

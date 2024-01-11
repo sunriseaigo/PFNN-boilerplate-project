@@ -93,12 +93,6 @@ const Header = () => {
           >
             <Link href="/landing">Dashboard</Link>
           </Text>
-          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
-            <Link href="/faetures">Features</Link>
-          </Text>
-          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
-            <Link href="/pricing">Pricing</Link>
-          </Text>
         </Flex>
       </Box>
       <Box>

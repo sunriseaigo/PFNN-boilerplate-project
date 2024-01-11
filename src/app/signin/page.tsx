@@ -100,7 +100,7 @@ const Login = () => {
                       const user = jwtDecode(res.data.token);
                       setUser(user);
                       setIsAuth(true);
-                      setIsAdmin(user.admin ? true : false);
+                      setIsAdmin(user.admin === "1" ? true : false);
                       localStorage.setItem("user", JSON.stringify(user));
                       push("/dashboard");
                     } else {
