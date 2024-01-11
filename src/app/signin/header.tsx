@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Box, Flex, Text, Button, Link } from "@chakra-ui/react";
-import Logo from "./logo";
+// import Logo from "./logo";
 
 const MenuItem = ({
   children,
@@ -65,7 +65,16 @@ const Header = () => {
       color={["white", "white", "primary.700", "primary.700"]}
     >
       <Flex align="center">
-        <Logo />
+        <Link href="/landing">
+          <Box
+            w="100px"
+            color={["white", "white", "primary.500", "primary.500"]}
+          >
+            <Text fontSize="lg" fontWeight="bold">
+              Logo
+            </Text>
+          </Box>
+        </Link>
       </Flex>
 
       <Box display={{ base: "block", md: "none" }} onClick={toggleMenu}>

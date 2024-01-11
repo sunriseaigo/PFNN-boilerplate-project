@@ -15,6 +15,7 @@ import {
   Link,
   Stack,
   Text,
+  Flex,
   InputRightElement,
   IconButton,
 } from "@chakra-ui/react";
@@ -25,6 +26,8 @@ import { Logo } from "./Logo";
 import { OAuthButtonGroup } from "./OAuthButtonGroup";
 
 import { useState } from "react";
+import Header from "./header";
+import customTheme from "../utils/theme";
 
 import axios from "axios";
 
@@ -35,9 +38,17 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
 
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider theme={customTheme}>
+      <Flex
+        direction="column"
+        align="center"
+        maxW={{ xl: "1200px" }}
+        m="0 auto"
+      >
+        <Header />
+      </Flex>
       <Container
-        style={{ marginTop: 50 }}
+        style={{ marginTop: -50 }}
         maxW="lg"
         py={{ base: "12", md: "24" }}
         px={{ base: "0", sm: "8" }}
