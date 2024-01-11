@@ -6,18 +6,17 @@ import { Box, Flex, Text, Button, Link } from "@chakra-ui/react";
 
 const MenuItem = ({
   children,
-  isLast,
+
   to = "/",
   ...rest
 }: {
   children: React.ReactNode;
-  isLast: boolean;
-  to: String;
+  to: string;
 }) => {
   return (
     <Text
-      mb={{ base: isLast ? 0 : 8, sm: 0 }}
-      mr={{ base: 0, sm: isLast ? 0 : 8 }}
+      mb={{ base: 8, sm: 0 }}
+      mr={{ base: 0, sm: 8 }}
       display="block"
       {...rest}
     >
@@ -92,9 +91,6 @@ const Header = () => {
           pt={[4, 4, 0, 0]}
         >
           <MenuItem to="/home">Home</MenuItem>
-          <MenuItem to="/how">How It works </MenuItem>
-          <MenuItem to="/faetures">Features </MenuItem>
-          <MenuItem to="/pricing">Pricing </MenuItem>
         </Flex>
       </Box>
     </Flex>

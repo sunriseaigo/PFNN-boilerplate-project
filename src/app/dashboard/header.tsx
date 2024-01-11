@@ -93,12 +93,6 @@ const Header = () => {
           >
             <Link href="/landing">Dashboard</Link>
           </Text>
-          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
-            <Link href="/faetures">Features</Link>
-          </Text>
-          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
-            <Link href="/pricing">Pricing</Link>
-          </Text>
         </Flex>
       </Box>
       <Box>
@@ -135,7 +129,7 @@ const Header = () => {
                 <Center>
                   <Box>
                     <Text fontWeight="bold">
-                      {user && user.name}
+                      {user}
                       <br />
                       <Badge ml="1" colorScheme="green">
                         ACTIVE - Freelancer
@@ -148,7 +142,7 @@ const Header = () => {
                       onClick={() => {
                         setIsAuth(false);
                         localStorage.removeItem("user");
-                        setUser({});
+                        setUser("");
                         push("/");
                       }}
                     >

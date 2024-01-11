@@ -20,28 +20,6 @@ import Logo from "./logo";
 import { useAppContext } from "@/context/authContext";
 import { useRouter } from "next/navigation";
 
-const MenuItem = ({
-  children,
-  isLast,
-  to = "/",
-  ...rest
-}: {
-  children: React.ReactNode;
-  isLast: boolean;
-  to: String;
-}) => {
-  return (
-    <Text
-      mb={{ base: isLast ? 0 : 8, sm: 0 }}
-      mr={{ base: 0, sm: isLast ? 0 : 8 }}
-      display="block"
-      {...rest}
-    >
-      <Link href={to}>{children}</Link>
-    </Text>
-  );
-};
-
 const CloseIcon = () => (
   <svg width="24" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
     <title>Close</title>
@@ -100,11 +78,21 @@ const Header = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          {isAuth && <MenuItem to="/dashboard">Dashboard</MenuItem>}
-          <MenuItem to="/home">Home</MenuItem>
-          <MenuItem to="/portfolio">Portfolio</MenuItem>
-          <MenuItem to="/faetures">Features </MenuItem>
-          <MenuItem to="/pricing">Pricing </MenuItem>
+          {isAuth && (
+            <Text
+              mb={{ dashboard: 8, sm: 0 }}
+              mr={{ base: 0, sm: 8 }}
+              display="block"
+            >
+              <Link href="/dashboard">Dashboard</Link>
+            </Text>
+          )}
+          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
+            <Link href="/landing">Landing</Link>
+          </Text>
+          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
+            <Link href="/home">Home</Link>
+          </Text>
         </Flex>
       </Box>
       {isAuth ? (
@@ -144,7 +132,7 @@ const Header = () => {
                   <Center>
                     <Box>
                       <Text fontWeight="bold">
-                        {user.name}
+                        {user}
                         <br />
                         <Badge ml="1" colorScheme="green">
                           ACTIVE - Freelancer
@@ -156,7 +144,7 @@ const Header = () => {
                         colorScheme="red"
                         onClick={() => {
                           localStorage.removeItem("user");
-                          setUser({});
+                          setUser("");
 
                           setIsAuth(false);
                           push("/");
