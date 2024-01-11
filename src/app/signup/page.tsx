@@ -28,7 +28,7 @@ import { OAuthButtonGroup } from "./OAuthButtonGroup";
 import { useState } from "react";
 import Header from "./header";
 import customTheme from "../utils/theme";
-
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 
 const SignUp = () => {
@@ -36,6 +36,7 @@ const SignUp = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const toast = useToast();
 
   return (
     <ChakraProvider theme={customTheme}>
@@ -48,7 +49,7 @@ const SignUp = () => {
         <Header />
       </Flex>
       <Container
-        style={{ marginTop: -50 }}
+        style={{ marginTop: -80 }}
         maxW="lg"
         py={{ base: "12", md: "24" }}
         px={{ base: "0", sm: "8" }}
@@ -75,15 +76,35 @@ const SignUp = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                const registgerUser = {
+                const registerUser = {
                   name,
                   email,
                   password,
                 };
                 axios
-                  .post("http://localhost:5000/auth/register", registgerUser)
+                  .post("http://localhost:5000/auth/register", registerUser)
                   .then((res) => {
-                    window.location.href = "/signin";
+                    console.log(res.data);
+                    if (res.data.success) {
+                      toast({
+                        title: "Success",
+                        description: "successfully registered",
+                        status: "success",
+                        duration: 5000,
+                        isClosable: true,
+                        position: "top-right",
+                      });
+                      window.location.href = "/signin";
+                    } else {
+                      toast({
+                        title: "Warning",
+                        description: `${email} already exists.`,
+                        status: "warning",
+                        duration: 5000,
+                        isClosable: true,
+                        position: "top-right",
+                      });
+                    }
                   });
               }}
             >
@@ -96,6 +117,7 @@ const SignUp = () => {
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      required
                     />
                   </FormControl>
                   <FormControl>
@@ -105,6 +127,7 @@ const SignUp = () => {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      required
                     />
                   </FormControl>
                   <FormControl>
