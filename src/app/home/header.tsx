@@ -20,28 +20,6 @@ import Logo from "./logo";
 import { useAppContext } from "@/context/authContext";
 import { useRouter } from "next/navigation";
 
-const MenuItem = ({
-  children,
-  isLast,
-  to = "/",
-  ...rest
-}: {
-  children: React.ReactNode;
-  isLast: boolean;
-  to: String;
-}) => {
-  return (
-    <Text
-      mb={{ base: isLast ? 0 : 8, sm: 0 }}
-      mr={{ base: 0, sm: isLast ? 0 : 8 }}
-      display="block"
-      {...rest}
-    >
-      <Link href={to}>{children}</Link>
-    </Text>
-  );
-};
-
 const CloseIcon = () => (
   <svg width="24" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
     <title>Close</title>

@@ -20,28 +20,6 @@ import Logo from "./logo";
 import { useAppContext } from "@/context/authContext";
 import { useRouter } from "next/navigation";
 
-const MenuItem = ({
-  children,
-  isLast,
-  to = "/",
-  ...rest
-}: {
-  children: React.ReactNode;
-  isLast: boolean;
-  to: String;
-}) => {
-  return (
-    <Text
-      mb={{ base: isLast ? 0 : 8, sm: 0 }}
-      mr={{ base: 0, sm: isLast ? 0 : 8 }}
-      display="block"
-      {...rest}
-    >
-      <Link href={to}>{children}</Link>
-    </Text>
-  );
-};
-
 const CloseIcon = () => (
   <svg width="24" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
     <title>Close</title>
@@ -99,10 +77,9 @@ const Header = () => {
           direction={["column", "row", "row", "row"]}
           pt={[4, 4, 0, 0]}
         >
-          <MenuItem to="/home">Home</MenuItem>
-          <MenuItem to="/how">How It works </MenuItem>
-          <MenuItem to="/faetures">Features </MenuItem>
-          <MenuItem to="/pricing">Pricing </MenuItem>
+          <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
+            <Link href="/home">Home</Link>
+          </Text>
           {user ? (
             <Box>
               <Flex alignItems={"center"}>
@@ -142,7 +119,7 @@ const Header = () => {
                       <Center>
                         <Box>
                           <Text fontWeight="bold">
-                            {user && user.name}
+                            {user}
                             <br />
                             <Badge ml="1" colorScheme="green">
                               ACTIVE - Freelancer
@@ -155,7 +132,7 @@ const Header = () => {
                             onClick={() => {
                               setIsAuth(false);
                               localStorage.removeItem("user");
-                              setUser({});
+                              setUser("");
                               push("/");
                             }}
                           >
@@ -170,7 +147,11 @@ const Header = () => {
               </Flex>
             </Box>
           ) : (
-            <MenuItem to="/signin" isLast>
+            <Text
+              mb={{ base: 0, sm: 0 }}
+              mr={{ base: 0, sm: 0 }}
+              display="block"
+            >
               <Button
                 size="sm"
                 rounded="md"
@@ -185,9 +166,9 @@ const Header = () => {
                   ],
                 }}
               >
-                Sign In
+                <Link href="/signin">Sign In</Link>
               </Button>
-            </MenuItem>
+            </Text>
           )}
         </Flex>
       </Box>

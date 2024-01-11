@@ -33,7 +33,7 @@ export function AppWrapper({ children }: IAppWrapperProps) {
 
   useEffect(() => {
     const user: string | null = localStorage.getItem("user");
-    setCurrentUser(user && JSON.parse(user));
+    setCurrentUser(user && JSON.parse(user).name);
     if (user) {
       setIsAuthenticated(true);
       const admin = JSON.parse(user).admin;
