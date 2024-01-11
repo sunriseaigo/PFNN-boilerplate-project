@@ -155,12 +155,7 @@ const SignUp = () => {
                     </InputGroup>
                   </FormControl>
                 </Stack>
-                <HStack justify="space-between">
-                  <Checkbox defaultChecked>Remember me</Checkbox>
-                  <Button variant="text" size="sm">
-                    Forgot password?
-                  </Button>
-                </HStack>
+
                 <Stack spacing="6">
                   <Button type="submit">Sign Up</Button>
                   <HStack>

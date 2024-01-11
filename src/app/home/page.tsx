@@ -355,7 +355,7 @@ const Experience = () => {
             }) => {
               return (
                 <div className=" card" key={Number(title)}>
-                  <img src={image} alt={title} />
+                  <Image src={image} alt={title} width={400} height={250} />
                   <div className="card-body">
                     <h6>{title}</h6>
                     <p>{description}</p>

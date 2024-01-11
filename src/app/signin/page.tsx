@@ -46,7 +46,7 @@ const Login = () => {
     if (isAuth) {
       push("/dashboard");
     }
-  }, []);
+  }, [isAuth, push]);
 
   return (
     <ChakraProvider theme={customTheme}>
@@ -159,12 +159,6 @@ const Login = () => {
                     </InputGroup>
                   </FormControl>
                 </Stack>
-                <HStack justify="space-between">
-                  <Checkbox defaultChecked>Remember me</Checkbox>
-                  <Button variant="text" size="sm">
-                    Forgot password?
-                  </Button>
-                </HStack>
                 <Stack spacing="6">
                   <Button type="submit">Sign in</Button>
                   <HStack>
