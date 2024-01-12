@@ -46,7 +46,7 @@ const Login = () => {
     if (isAuth) {
       push("/dashboard");
     }
-  }, []);
+  }, [isAuth, push]);
 
   return (
     <ChakraProvider theme={customTheme}>
