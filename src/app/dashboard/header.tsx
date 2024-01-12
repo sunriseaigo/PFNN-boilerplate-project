@@ -129,7 +129,7 @@ const Header = () => {
                 <Center>
                   <Box>
                     <Text fontWeight="bold">
-                      {user && user.name}
+                      {user}
                       <br />
                       <Badge ml="1" colorScheme="green">
                         ACTIVE - Freelancer
@@ -142,7 +142,7 @@ const Header = () => {
                       onClick={() => {
                         setIsAuth(false);
                         localStorage.removeItem("user");
-                        setUser({});
+                        setUser("");
                         push("/");
                       }}
                     >

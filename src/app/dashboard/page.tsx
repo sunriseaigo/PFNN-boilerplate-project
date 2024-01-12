@@ -24,17 +24,25 @@ import axios from "axios";
 
 import moment from "moment";
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  admin: string;
+  created_at: string;
+}
+
 export default function Home() {
   const { user, isAuth, isAdmin } = useAppContext();
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
   const { push } = useRouter();
   const toast = useToast();
 
   useEffect(() => {
     if (isAuth) {
       toast({
-        title: `${user.name}`,
+        title: `${user}`,
         description: "welcome to our dashboard.",
         status: "success",
         duration: 5000,
@@ -75,7 +83,7 @@ export default function Home() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {users.map((user, index) => (
+                  {users.map((user: User, index: number) => (
                     <Tr key={user.id}>
                       <Td>{index + 1}</Td>
                       <Td>{user.name}</Td>
@@ -100,7 +108,7 @@ export default function Home() {
                           }}
                         />
                       </Td>
-                      <Td>{moment().format("YYYY-MM-DD", user.created_at)}</Td>
+                      <Td>{moment(user.created_at).format("YYYY-MM-DD")}</Td>
                     </Tr>
                   ))}
                 </Tbody>
