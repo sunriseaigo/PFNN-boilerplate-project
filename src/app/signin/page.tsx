@@ -97,8 +97,15 @@ const Login = () => {
                   .post("http://localhost:5000/auth/login", loginUser)
                   .then((res) => {
                     if (res.data.success) {
-                      const user = jwtDecode(res.data.token);
-                      setUser(user);
+                      interface User {
+                        name: string;
+                        admin: string;
+                        email: string;
+                      }
+
+                      const user: User = jwtDecode(res.data.token);
+
+                      setUser(user.name);
                       setIsAuth(true);
                       setIsAdmin(user.admin === "1" ? true : false);
                       localStorage.setItem("user", JSON.stringify(user));

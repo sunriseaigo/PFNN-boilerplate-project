@@ -46,7 +46,7 @@ const Header = () => {
   const [show, setShow] = useState(false);
   const toggleMenu = () => setShow(!show);
   const { push } = useRouter();
-  const { user, setUser, setIsAuth } = useAppContext();
+  const { user, setUser, setIsAuth, isAuth } = useAppContext();
   return (
     <Flex
       as="nav"
@@ -80,6 +80,15 @@ const Header = () => {
           <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
             <Link href="/home">Home</Link>
           </Text>
+          {isAuth && (
+            <Text
+              mb={{ base: 8, sm: 0 }}
+              mr={{ base: 0, sm: 8 }}
+              display="block"
+            >
+              <Link href="/dashboard">Dashboard</Link>
+            </Text>
+          )}
           {user ? (
             <Box>
               <Flex alignItems={"center"}>

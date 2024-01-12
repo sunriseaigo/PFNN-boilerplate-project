@@ -14,13 +14,13 @@ import {
   Center,
   useColorModeValue,
   useSteps,
-  Progress,
   Flex,
   Divider,
   Heading,
   Button,
   Stack,
 } from "@chakra-ui/react";
+import Image from "next/image";
 
 import { BsGithub } from "react-icons/bs";
 
@@ -229,6 +229,13 @@ const steps = [
   },
 ];
 
+interface Step {
+  title: string;
+  duration: string;
+  companyName: string;
+  description: string;
+}
+
 const Experience = () => {
   const { activeStep, setActiveStep } = useSteps({
     index: steps.length - 1,
@@ -268,46 +275,32 @@ const Experience = () => {
             </Text>
           </Center>
 
-          <Center>
-            <Box width={{ base: "100%", md: "80%", lg: "50%" }}>
-              <Stepper
-                activeStep={0}
-                lineWidth={3}
-                steps={steps.length}
-                orientation="vertical"
-                index={activeStep}
-              >
-                {steps.map((step, index) => (
-                  <Step mt={2} m={15} key={index}>
-                    <StepIndicator>
-                      <StepStatus complete={<StepIcon />} />
-                    </StepIndicator>
+          <Box width={{ base: "100%", md: "80%", lg: "50%" }} m="0 auto">
+            <Stepper orientation="vertical" index={activeStep}>
+              {steps.map((step: Step, index: number) => (
+                <Step key={index}>
+                  <StepIndicator>
+                    <StepStatus complete={<StepIcon />} />
+                  </StepIndicator>
 
-                    <Box
-                      p={4}
-                      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                      borderRadius="10px"
-                      overflow="hidden"
-                      scrollMarginY={10}
-                    >
-                      <StepTitle fontSize="18px" fontWeight="bold">
-                        {step.title}
-                      </StepTitle>
-                      <StepDescription fontWeight="bold" fontSize="0.8em">
-                        {step.duration}
-                      </StepDescription>
-                      <StepDescription fontWeight="bold">
-                        {step.companyName}
-                      </StepDescription>
-                      <StepDescription>{step.description}</StepDescription>
-                    </Box>
+                  <Box
+                    p={4}
+                    boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                    borderRadius="10px"
+                    overflow="hidden"
+                    scrollMarginY={10}
+                  >
+                    <StepTitle>{step.title}</StepTitle>
+                    <StepDescription>{step.duration}</StepDescription>
+                    <StepDescription>{step.companyName}</StepDescription>
+                    <StepDescription>{step.description}</StepDescription>
+                  </Box>
 
-                    <StepSeparator />
-                  </Step>
-                ))}
-              </Stepper>
-            </Box>
-          </Center>
+                  <StepSeparator />
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
         </Box>
       </Flex>
 
@@ -345,7 +338,6 @@ const Experience = () => {
         <section className=" main" id="about">
           {projects.map(
             ({
-              id,
               image,
               title,
               description,
@@ -353,13 +345,13 @@ const Experience = () => {
               source,
               visit,
             }: {
-              image: String;
-              tags: String[];
-              id: String;
-              title: String;
-              description: String;
-              source: String;
-              visit: String;
+              image: string;
+              tags: string[];
+              id: string;
+              title: string;
+              description: string;
+              source: string;
+              visit: string;
             }) => {
               return (
                 <div className=" card" key={Number(title)}>
@@ -413,7 +405,7 @@ const Experience = () => {
                             bg: "gray.200",
                           }}
                           onClick={() => {
-                            window.open({ visit }, "_blank");
+                            window.open(visit, "_blank");
                           }}
                         >
                           Visit

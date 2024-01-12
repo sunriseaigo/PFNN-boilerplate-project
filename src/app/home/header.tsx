@@ -84,7 +84,7 @@ const Header = () => {
               mr={{ base: 0, sm: 8 }}
               display="block"
             >
-              <Link href="/landing">Dashboard</Link>
+              <Link href="/dashboard">Dashboard</Link>
             </Text>
           )}
           <Text mb={{ base: 8, sm: 0 }} mr={{ base: 0, sm: 8 }} display="block">
