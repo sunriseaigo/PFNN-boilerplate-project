@@ -39,4 +39,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 For any questions or inquiries, please reach out to the development team at [sunrise96208@gmail.com]
 
-Enjoy using Trackify and stay productive!
+Enjoy using my project and stay productive!
